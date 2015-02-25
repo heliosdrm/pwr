@@ -1,0 +1,12 @@
+2015-02-26 Helios De Rosario-Martinez <helios.derosario@gmail.com>
+
+* DESCRIPTION: Authors redefined as Authors@R; add Claus Ekstrom and Peter Daalgard.
+New maintainer (Helios De Rosario, taking over Stephane Champely's work).
+Update License to GPL>=3.
+Added link to Github development repository.
+
+* LICENSE: Added GPL 3 license.
+
+* man: fixed line widths of usage and example in various files.
+
+* Version 1.1-2

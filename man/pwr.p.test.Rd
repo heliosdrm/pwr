@@ -5,7 +5,8 @@
  Compute power of test or determine parameters to obtain target
      power (same as power.anova.test).}
 \usage{
-pwr.p.test(h = NULL, n = NULL, sig.level = 0.05, power = NULL,alternative = c("two.sided","less","greater"))
+pwr.p.test(h = NULL, n = NULL, sig.level = 0.05, power = NULL,
+    alternative = c("two.sided","less","greater"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -7,7 +7,8 @@
      power.
 }
 \usage{
-pwr.2p2n.test(h = NULL, n1 = NULL, n2 = NULL, sig.level = 0.05, power = NULL,alternative = c("two.sided", "less","greater"))
+pwr.2p2n.test(h = NULL, n1 = NULL, n2 = NULL, sig.level = 0.05, power = NULL,
+    alternative = c("two.sided", "less","greater"))
 }
 
 \arguments{

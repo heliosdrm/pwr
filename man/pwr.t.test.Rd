@@ -6,8 +6,8 @@
      power (similar to power.t.test).}
 \usage{
 pwr.t.test(n = NULL, d = NULL, sig.level = 0.05, power = NULL, 
-    type = c("two.sample", "one.sample", "paired"), alternative = c("two.sided", 
-        "less","greater"))
+    type = c("two.sample", "one.sample", "paired"),
+    alternative = c("two.sided", "less", "greater"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
