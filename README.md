@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/heliosdrm/pwr.svg?branch=master)](https://travis-ci.org/heliosdrm/pwr)
+
 # R package &ldquo;pwr&rdquo;
 ## Basic functions for power analysis
 ### Getting started
