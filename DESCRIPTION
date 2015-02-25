@@ -2,9 +2,11 @@ Package: pwr
 Version: 1.1-2
 Date: 2015-02-26
 Title: Basic functions for power analysis
-Authors@R: c(person("Stephane", "Champely", role=c("aut", "cre")),
+Authors@R: c(person("Stephane", "Champely", role=c("aut")),
   person("Claus", "Ekstrom", role="ctb"),
-  person("Peter", "Dalgaard", role="ctb"))
+  person("Peter", "Dalgaard", role="ctb"),
+  person("Helios", "De Rosario", role="cre",
+  email="helios.derosario@gmail.com"))
 Description: Power analysis functions along the lines of Cohen (1988).
 License: GPL (>= 3)
 URL: https://github.com/heliosdrm/pwr
