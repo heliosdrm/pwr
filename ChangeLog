@@ -1,12 +1,16 @@
-2015-02-26 Helios De Rosario-Martinez <helios.derosario@gmail.com>
+2015-02-27 Helios De Rosario-Martinez <helios.derosario@gmail.com>
 
-* DESCRIPTION: Authors redefined as Authors@R; add Claus Ekstrom and Peter Daalgard.
+* DESCRIPTION: Authors redefined as Authors@R.
+Add Claus Ekstrom, Peter Daalgard and Jeffrey Gill as contributors.
 New maintainer (Helios De Rosario, taking over Stephane Champely's work).
 Update License to GPL>=3.
 Added link to Github development repository.
 
 * LICENSE: Added GPL 3 license.
 
-* man: fixed line widths of usage and example in various files.
+* man: Fixed line widths of usage and example in various files.
+(pwr-package.Rd)Updated authors.
+
+* R/pwr.r.test.R: Fixed calculation of zrc following Jeffrey Gill's report.
 
 * Version 1.1-2

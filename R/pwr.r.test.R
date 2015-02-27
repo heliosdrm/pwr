@@ -22,7 +22,7 @@ function (n = NULL, r = NULL, sig.level = 0.05, power = NULL,
             ttt <- qt(sig.level, df = n - 2, lower = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
-            zrc <- atanh(rc) + rc/(2 * (n - 1))
+            zrc <- atanh(rc) # + rc/(2 * (n - 1))
             pnorm((zr - zrc) * sqrt(n - 3))
         })
     }
@@ -32,7 +32,7 @@ r<--r
             ttt <- qt(sig.level, df = n - 2, lower = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
-            zrc <- atanh(rc) + rc/(2 * (n - 1))
+            zrc <- atanh(rc) # + rc/(2 * (n - 1))
             pnorm((zr - zrc) * sqrt(n - 3))
         })
     }
@@ -42,7 +42,7 @@ r<--r
             ttt <- qt(sig.level/2, df = n - 2, lower = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
-            zrc <- atanh(rc) + rc/(2 * (n - 1))
+            zrc <- atanh(rc) # + rc/(2 * (n - 1))
             pnorm((zr - zrc) * sqrt(n - 3)) + pnorm((-zr - zrc) * 
                 sqrt(n - 3))
         })
