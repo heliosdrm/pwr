@@ -27,9 +27,8 @@ ttside<-switch(alternative, less = 1, two.sided = 2, greater=3)
     if (ttside == 1) {
         p.body <- quote({
             nu <- n1+n2-2
-            pt(qt(sig.level/tside, nu, lower = TRUE), nu, 
-ncp = d*(1/sqrt(1/n1+1/n2)),
- lower = TRUE)
+            pt(qt(sig.level/tside, nu, lower = FALSE), nu, ncp = d *
+                (1/sqrt(1/n1 + 1/n2)), lower = FALSE)
         })
     }
     if (ttside == 2)  {

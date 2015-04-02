@@ -1,3 +1,7 @@
+2015-04-02 Helios De Rosario-Martinez <helios.derosario@gmail.com>
+
+* R/pwr.t2n.test: Fix following Jan Wunder's report.
+
 2015-02-27 Helios De Rosario-Martinez <helios.derosario@gmail.com>
 
 * DESCRIPTION: Authors redefined as Authors@R.
