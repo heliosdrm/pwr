@@ -3,3 +3,6 @@
 
 # Export all names
 exportPattern(".")
+
+# Imports
+import("stats")

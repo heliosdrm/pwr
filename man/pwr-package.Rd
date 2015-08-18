@@ -16,7 +16,7 @@ Power calculations along the lines of Cohen (1988)
 Package: \tab pwr\cr
 Type: \tab Package\cr
 Version: \tab 1.1-3\cr
-Date: \tab 2015-04-02\cr
+Date: \tab 2015-08-18\cr
 License: \tab GPL (>= 3) \cr
 }
 This package contains functions for basic power calculations using effect sizes and 
