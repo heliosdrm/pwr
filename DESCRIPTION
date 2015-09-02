@@ -1,12 +1,11 @@
 Package: pwr
-Version: 1.1-3
-Date: 2015-08-18
+Version: 1.1-4
+Date: 2015-09-02
 Title: Basic Functions for Power Analysis
 Authors@R: c(person("Stephane", "Champely", role=c("aut")),
   person("Claus", "Ekstrom", role="ctb"),
   person("Peter", "Dalgaard", role="ctb"),
   person("Jeffrey", "Gill", role="ctb"),
-  person("Jan", "Wunder", role="ctb"),
   person("Helios", "De Rosario", role="cre",
   email="helios.derosario@gmail.com"))
 Description: Power analysis functions along the lines of Cohen (1988).
