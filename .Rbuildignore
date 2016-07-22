@@ -3,3 +3,5 @@
 .gitignore
 LICENSE
 README.md
+^.*\.Rproj$
+^\.Rproj\.user$
