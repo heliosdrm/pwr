@@ -5,4 +5,4 @@
 exportPattern(".")
 
 # Imports
-import("stats", "ggplot2", "scales")
+import(stats, ggplot2, scales)
