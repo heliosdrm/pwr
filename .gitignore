@@ -12,3 +12,4 @@
 
 # RStudio files
 .Rproj.user/
+*.Rproj
