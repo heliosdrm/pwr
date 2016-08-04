@@ -1,3 +1,11 @@
+2016-08-04 Helios De Rosario-Martinez <helios.derosario@gmail.com>
+
+* Version 1.1-4
+
+* R/plot.power.htest: New function contributed by Stephan Weibelzahl.
+
+* DESCRIPTION, NAMESPACE, man: Adapt to include new plot.power.htest function.
+
 2015-09-02 Helios De Rosario-Martinez <helios.derosario@gmail.com>
 
 * R/pwr.t2n.test: Revert to previous version. 

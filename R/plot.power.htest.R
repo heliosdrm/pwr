@@ -1,4 +1,4 @@
-"plot.power.htest" <- function (x, ...){
+plot.power.htest <- function (x, ...){
   # initial checks
   if (class(x) != 
       "power.htest") 

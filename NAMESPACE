@@ -6,3 +6,6 @@ exportPattern(".")
 
 # Imports
 import(stats, ggplot2, scales)
+
+# S3 methods
+S3method(plot, power.htest)
