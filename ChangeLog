@@ -1,3 +1,14 @@
+2016-08-06 Helios De Rosario-Martinez <helios.derosario@gmail.com>
+
+* Version 1.2-0
+
+* DESCRIPTION: move ggplot2 and scales to "Suggests"; import from graphics.
+
+* NAMESPACE: remove ggplot2 and scales from import; add graphics.
+
+* R/plot.power.htest: falling back to generic plot tools
+if ggplot2 and scales do not exist.
+
 2016-08-04 Helios De Rosario-Martinez <helios.derosario@gmail.com>
 
 * Version 1.1-4

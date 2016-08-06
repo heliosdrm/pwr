@@ -8,13 +8,17 @@
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{object of class power.htest usually created by one of the power calculation functions, e.g., pwr.t.test()}
-  \item{\dots}{Arguments to be passed to \link{ggplot} including xlab and ylab}
+  \item{\dots}{Arguments to be passed to \code{ggplot} including xlab and ylab}
 }
 \details{
 Power calculations for the following tests are supported: t-test (pwr.t.test(), pwr.t2n.test()), chi squared test (pwr.chisq.test()), one-way ANOVA (pwr.anova.test(), standardnormal distribution (pwr.norm.test()), pearson correlation (pwr.r.test()), proportions (pwr.p.test(), pwr.2p.test(), pwr.2p2n.test()))
+
 }
 \value{
 These functions are invoked for their side effect of drawing on the active graphics device.
+}
+\note{
+By default it attempts to use the plotting tools of \href{https://cran.r-project.org/package=ggplot2/}{ggplot2} and \href{https://cran.r-project.org/package=scales}{scales}.  If they are not installed, it will use the basic R plotting tools.
 }
 \author{Stephan Weibelzahl <weibelzahl@pfh.de>}
 \seealso{

@@ -262,15 +262,28 @@ plot.power.htest <- function (x, ...){
 
   
   # plot
-  ggplot(data = data, aes(x=sample_sizes, y=power)) +
-    geom_line(colour="red", size=0.1, na.rm = TRUE) +
-    geom_point(na.rm = TRUE) +
-    geom_vline(xintercept = ceiling(n), linetype=3, size=0.8, colour="darkblue") +
-    xlab(xlab_string) +
-    ylab(ylab_string) +
-    ggtitle(title_string) +
-    scale_y_continuous(labels=percent,limits = c(0,1)) +
-    annotate("text", 10, legend_anchor, label=legend_string, hjust=0, vjust=legend_vjust, size=3.5) +
-    annotate("text", n + ((n_upper-10)/breaks), text_anchor, label=optimal_string, hjust=0, vjust=text_vjust, colour="darkblue", size=3.5)
+  if (requireNamespace("ggplot2", quietly = TRUE) && requireNamespace("scales", quietly = TRUE)) {
+    ggplot2::ggplot(data = data, ggplot2::aes(x=sample_sizes, y=power)) +
+      ggplot2::geom_line(colour="red", size=0.1, na.rm = TRUE) +
+      ggplot2::geom_point(na.rm = TRUE) +
+      ggplot2::geom_vline(xintercept = ceiling(n), linetype=3, size=0.8, colour="darkblue") +
+      ggplot2::xlab(xlab_string) +
+      ggplot2::ylab(ylab_string) +
+      ggplot2::ggtitle(title_string) +
+      ggplot2::scale_y_continuous(labels=scales::percent,limits = c(0,1)) +
+      ggplot2::annotate("text", 10, legend_anchor, label=legend_string, hjust=0, vjust=legend_vjust, size=3.5) +
+      ggplot2::annotate("text", n + ((n_upper-10)/breaks), text_anchor, label=optimal_string, hjust=0, vjust=text_vjust, colour="darkblue", size=3.5)
+  }else{
+    # Alternative if ggplot2 or scales are not included
+    plot(power~sample_sizes, data=data, type="l", col="red", xlab=xlab_string, ylab=ylab_string, yaxt="n", ylim=c(0,1))
+    points(power~sample_sizes, data=data, pch=16)
+    axis(2, at=pretty(data$power), labels=paste0(pretty(data$power)*100,"%"), las=TRUE)
+    title(title_string)
+    grid()
+    abline(v=ceiling(n), lty=3, col="darkblue")
+    text(10, legend_anchor, labels=legend_string, adj=c(0,legend_vjust), cex=.8)
+    text(n + ((n_upper-10)/breaks), text_anchor, labels=optimal_string, adj=c(0,text_vjust), cex=.8, col="darkblue")
+    grid(TRUE)
+  }
   
 }
