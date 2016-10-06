@@ -22,10 +22,10 @@ function (w = NULL, N = NULL, df = NULL, sig.level = 0.05, power = NULL)
         power <- eval(p.body)
     else if (is.null(w)) 
         w <- uniroot(function(w) eval(p.body) - power, c(1e-10, 
-            1e+05))$root
+            1e+09))$root
     else if (is.null(N)) 
         N <- uniroot(function(N) eval(p.body) - power, c(1 + 
-            1e-10, 1e+05))$root
+            1e-10, 1e+09))$root
     else if (is.null(sig.level)) 
         sig.level <- uniroot(function(sig.level) eval(p.body) - 
             power, c(1e-10, 1 - 1e-10))$root
