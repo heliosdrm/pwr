@@ -50,7 +50,7 @@ function (d = NULL, n = NULL, sig.level = 0.05, power = NULL,
 	}
     else if (is.null(n)) 
         n <- uniroot(function(n) eval(p.body) - power, c(1 + 
-            1e-10, 1e+05))$root
+            1e-10, 1e+09))$root
     else if (is.null(sig.level)) 
         sig.level <- uniroot(function(sig.level) eval(p.body) - 
             power, c(1e-10, 1 - 1e-10))$root
