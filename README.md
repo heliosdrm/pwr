@@ -1,7 +1,10 @@
-[![Build Status](https://travis-ci.org/heliosdrm/pwr.svg?branch=master)](https://travis-ci.org/heliosdrm/pwr)
-
 # R package &ldquo;pwr&rdquo;
 ## Basic functions for power analysis
+
+[![Build Status](https://travis-ci.org/heliosdrm/pwr.svg?branch=master)](https://travis-ci.org/heliosdrm/pwr)
+
+[![CRAN version](http://www.r-pkg.org/badges/version/pwr)](http://www.r-pkg.org/pkg/pwr)
+[![Downloads](http://cranlogs.r-pkg.org/badges/pwr)]()
 
 This package was originally created by Stephane Champely, from the University of Lyon.
 
