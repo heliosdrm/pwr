@@ -1,0 +1,46 @@
+---
+title: "Getting started with the pwr package"
+# author: "Clay Ford"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with the pwr package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## A simple example
+
+The basic idea of calculating power or sample size with functions in the pwr package is to _leave one out_. If you want to calculate power, then leave the `power` argument out of the function. If you want to calculate sample size, leave `n` out of the function. 
+
+For example, let's say we suspect we have a loaded coin that lands heads 75% of the time instead of the expected 50%. We wish to create an experiment to test this. We will flip the coin a certain number of times and observe the proportion of heads. We will then conduct a one-sample proportion test to see if the proportion of heads is significantly different from what we would expect with a fair coin. We will judge significance by our p-value. If our p-value falls below a certain threshold, say 0.05, we will conclude our coin's behavior is inconsistent with that of a fair coin. Our null hypothesis is $p = 0.5$. Our alternative is $p > 0.5$. How many times do we need to flip the coin in order to have a high probability, say 0.80, of correctly rejecting the null of $p = 0.5$ if we're correct that our coin is indeed loaded to land heads 75% of the time?
+
+Here is how we can determine this using the `pwr.p.test` function. 
+
+```{r echo=TRUE}
+library(pwr)
+pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50), 
+           sig.level = 0.05, 
+           power = 0.80, 
+           alternative = "greater")
+```
+
+The result is 23. Always round sample size estimates up. We would take 23 as the minimum number of coin flips we need to make to achieve 80% power. 
+
+Notice that since we wanted to determe sample size (`n`), we left it out of the function. Our _effect size_ is entered in the `h` argument. The label `h` is due to Cohen (1988). The function `ES.h` is used to calculate a unitless effect size using the arcsine transformation. `sig.level` is the argument for our desired significance level. This is also sometimes referred to as our tolerance for a Type I error ($\alpha$). `power` is our desired power. It is sometimes referred to as $1 - \beta$, where $\beta$ is Type II error. The `alternative` argument says we think the alternative is "greater" than the null, not just different. 
+
+Type I error, $\alpha$, is the probability of rejecting the null hypothesis when it is true. This is thinking we have found an effect where none exist. This is considered the more serious error. Our tolerance for Type I error is usually 0.05 or lower.
+
+Type II error, $\beta$, is the probability of failing to reject the null hypothesis when it is false. This is thinking there is no effect when in fact there is. Our tolerance for Type II error is usually 0.20 or lower. Type II error is 1 - Power. If we desire a power of 0.90, then we implicitly specify a Type II error tolerance of 0.10. 
+
+The pwr package provides a generic `plot` function that allows us to see how power changes as we change our sample size. If you have the ggplot2 package installed, it will create a plot using ggplot. Otherwise base R graphics are used.
+
+```{r fig.height=5, fig.width=7}
+p.out <- pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
+                    sig.level = 0.05, 
+                    power = 0.80, 
+                    alternative = "greater")
+plot(p.out)
+```
+
+

@@ -11,6 +11,9 @@ Authors@R: c(person("Stephane", "Champely", role=c("aut")),
   email="helios.derosario@gmail.com"))
 Description: Power analysis functions along the lines of Cohen (1988).
 Imports: stats, graphics
-Suggests: ggplot2, scales
+Suggests: ggplot2, scales,
+    knitr,
+    rmarkdown
 License: GPL (>= 3)
 URL: https://github.com/heliosdrm/pwr
+VignetteBuilder: knitr
