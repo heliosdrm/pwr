@@ -11,9 +11,9 @@ vignette: >
 
 ## A simple example
 
-The basic idea of calculating power or sample size with functions in the pwr package is to _leave one out_. If you want to calculate power, then leave the `power` argument out of the function. If you want to calculate sample size, leave `n` out of the function. 
+The basic idea of calculating power or sample size with functions in the pwr package is to _leave out_ the argument that you want to calculate. If you want to calculate power, then leave the `power` argument out of the function. If you want to calculate sample size, leave `n` out of the function. Whatever parameter you want to calculate is determined from the others. 
 
-For example, let's say we suspect we have a loaded coin that lands heads 75% of the time instead of the expected 50%. We wish to create an experiment to test this. We will flip the coin a certain number of times and observe the proportion of heads. We will then conduct a one-sample proportion test to see if the proportion of heads is significantly different from what we would expect with a fair coin. We will judge significance by our p-value. If our p-value falls below a certain threshold, say 0.05, we will conclude our coin's behavior is inconsistent with that of a fair coin. Our null hypothesis is $p = 0.5$. Our alternative is $p > 0.5$. How many times do we need to flip the coin in order to have a high probability, say 0.80, of correctly rejecting the null of $p = 0.5$ if we're correct that our coin is indeed loaded to land heads 75% of the time?
+For example, let's say we suspect we have a loaded coin that lands heads 75% of the time instead of the expected 50%. We wish to create an experiment to test this. We will flip the coin a certain number of times and observe the proportion of heads. We will then conduct a one-sample proportion test to see if the proportion of heads is significantly different from what we would expect with a fair coin. We will judge significance by our p-value. If our p-value falls below a certain threshold, say 0.05, we will conclude our coin's behavior is inconsistent with that of a fair coin. Our null hypothesis is $p = 0.5$. Our alternative is $p > 0.5$. How many times do we need to flip the coin in order to have a high probability (or _power_), say 0.80, of correctly rejecting the null of $p = 0.5$ if we're correct that our coin is indeed loaded to land heads 75% of the time?
 
 Here is how we can determine this using the `pwr.p.test` function. 
 
@@ -25,15 +25,15 @@ pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
            alternative = "greater")
 ```
 
-The result is 23. Always round sample size estimates up. We would take 23 as the minimum number of coin flips we need to make to achieve 80% power. 
+The result is 23. Always round sample size estimates up. We would take 23 as the minimum number of coin flips we need to achieve 80% power. 
 
-Notice that since we wanted to determe sample size (`n`), we left it out of the function. Our _effect size_ is entered in the `h` argument. The label `h` is due to Cohen (1988). The function `ES.h` is used to calculate a unitless effect size using the arcsine transformation. `sig.level` is the argument for our desired significance level. This is also sometimes referred to as our tolerance for a Type I error ($\alpha$). `power` is our desired power. It is sometimes referred to as $1 - \beta$, where $\beta$ is Type II error. The `alternative` argument says we think the alternative is "greater" than the null, not just different. 
+Notice that since we wanted to determe sample size (`n`), we left it out of the function. Our _effect size_ is entered in the `h` argument. The label `h` is due to Cohen (1988). The function `ES.h` is used to calculate a unitless effect size using the arcsine transformation. (More on effect size below.) `sig.level` is the argument for our desired significance level. This is also sometimes referred to as our tolerance for a Type I error ($\alpha$). `power` is our desired power. It is sometimes referred to as $1 - \beta$, where $\beta$ is Type II error. The `alternative` argument says we think the alternative is "greater" than the null, not just different. 
 
 Type I error, $\alpha$, is the probability of rejecting the null hypothesis when it is true. This is thinking we have found an effect where none exist. This is considered the more serious error. Our tolerance for Type I error is usually 0.05 or lower.
 
 Type II error, $\beta$, is the probability of failing to reject the null hypothesis when it is false. This is thinking there is no effect when in fact there is. Our tolerance for Type II error is usually 0.20 or lower. Type II error is 1 - Power. If we desire a power of 0.90, then we implicitly specify a Type II error tolerance of 0.10. 
 
-The pwr package provides a generic `plot` function that allows us to see how power changes as we change our sample size. If you have the ggplot2 package installed, it will create a plot using ggplot. Otherwise base R graphics are used.
+The pwr package provides a generic `plot` function that allows us to see how power changes as we change our sample size. If you have the ggplot2 package installed, it will create a plot using `ggplot`. Otherwise base R graphics are used.
 
 ```{r fig.height=5, fig.width=7}
 p.out <- pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
@@ -43,4 +43,476 @@ p.out <- pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
 plot(p.out)
 ```
 
+What is the power of our test if we flip the coin 50 times and lower our Type I error tolerance to 0.01? Notice we leave out the `power` argument, add `n = 50`, and change `sig.level = 0.01`:
 
+```{r}
+pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
+                    sig.level = 0.01, 
+                    n = 50,
+                    alternative = "greater")
+
+```
+
+The power of our test is greater than 90%. 
+
+We specifed `alternative = "greater"` since we assumed the coin was loaded for more heads (not less). This is a stronger assumption than assuming that the coin is simply unfair in one way or another. In practice, sample size and power calculations will usually make this more conservative "two-sided" assumption. In fact this is the default for pwr functions with an `alternative` argument. If we wish to assume a "two-sided" alternative, we can simply leave it out of the function. Notice the increase in sample size from 23 to 29 if we assume a "two-sided" alternative:
+
+```{r}
+pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
+           sig.level = 0.05,
+           power = 0.80)
+```
+
+
+## More on effect size
+
+Cohen describes effect size as "the degree to which the null hypothesis is false." In our coin flipping example, this is the difference between 75% and 50%. We could say the effect was 25% but recall we had to transform the absolute difference in proportions to another quantity using the `ES.h` function. This is a crucial part of using the pwr package correctly. _You must provide an effect size on the expected scale._ Entering an incorrect effect size will produce wrong sample size and power calculations. 
+
+When in doubt, we can use _Conventional Effect Sizes_. These are pre-determined effect sizes for "small", "medium", and "large" effects. The `cohen.ES` function returns a conventional effect size for a given test and size. For example, the medium effect size for the correlation test is 0.3:
+
+```{r}
+cohen.ES(test = "r", size = "medium")
+```
+
+For convenience, here are all conventional effect sizes for all tests in the pwr package:
+
+Test                        | `small` | `medium` | `large`
+----------------------------|-------|--------|-------
+tests for proportions (`p`) | 0.2   | 0.5    | 0.8
+tests for means (`t`)       | 0.2   | 0.5    | 0.8
+chi-square tests (`chisq`)  | 0.1   | 0.3    | 0.5
+correlation test (`r`)      | 0.1   | 0.3    | 0.5 
+anova (`anov`)              | 0.1   | 0.25   | 0.4 
+general linear model (`f2`) | 0.02  | 0.15   | 0.35 
+
+It is worth noting that pwr functions can take vectors for effect size and n arguments. This allows us to make many power calculations at once, either for multiple effect sizes or multiple sample sizes. For example, let's see how power changes for our coin flipping experiment for the three conventional effect sizes of 0.2, 0.5, and 0.8, assuming a sample size of 20.
+
+```{r}
+pwr.p.test(h = c(0.2,0.5,0.8),
+           n = 20,
+           sig.level = 0.05)
+
+```
+
+
+As we demonstrated with the `plot` function above, we can save our results. This produces a list object from which we can extract quantities for futher manipulation. For example, we can calculate power for sample sizes ranging from 10 to 100 in steps of 10, with an assumed "medium" effect of 0.5, and output to a data frame with some formatting:
+
+```{r}
+n <- seq(10,100,10)
+p.out <- pwr.p.test(h = 0.5,
+                    n = n,
+                    sig.level = 0.05)
+data.frame(n, power = sprintf("%.2f%%", p.out$power * 100))
+
+```
+
+We can also directly extract quantities with the `$` function appended to the end of a pwr function. For example, 
+
+```{r}
+pwr.p.test(h = 0.5, n = n, sig.level = 0.05)$power
+```
+
+
+## More examples
+
+### pwr.2p.test - two-sample test for proportions
+
+Let's say we want to randomly sample male and female college undergraduate
+students and ask them if they consume alcohol at least once a week. Our null
+hypothesis is no difference in the proportion that answer yes. Our alternative
+hypothesis is that there is a difference. (two-sided; one gender has higher
+proportion, we don't know which.) We would like to detect a difference as small as
+5%. How many students do I need to sample in each group if we want 80% power
+and a significance level of 0.05?
+
+
+If we think one group proportion is 55% and the other 50%:
+
+```{r}
+pwr.2p.test(h = ES.h(p1 = 0.55, p2 = 0.50), sig.level = 0.05, power = .80)
+
+```
+
+If we think one group proportion is 15% and the other 10%:
+
+```{r}
+pwr.2p.test(h = ES.h(p1 = 0.15, p2 = 0.10), sig.level = 0.05, power = .80)
+
+```
+
+Notice the difference in sample sizes. Also notice that sample size is _per group_. 
+
+Base R has a function called `power.prop.test` that allows you to use the raw
+proportions in the function without a need for a separate effect size function.
+
+```{r}
+power.prop.test(p1 = 0.55, p2 = 0.50, sig.level = 0.05, power = .80)
+
+```
+
+Notice the results are slightly different. It calculates effect size
+differently.
+
+If we don't have any preconceived estimates of proportions or don't feel 
+comfortable making estimates, we can use conventional effect sizes of 0.2 (small),
+0.5 (medium), or 0.8 (large). The sample size per group needed to detect a "small" effect with 80% power and 0.05 significance is about 393:
+
+```{r}
+pwr.2p.test(h = 0.2, sig.level = 0.05, power = .80)
+
+```
+
+
+### pwr.2p2n.test - two-sample test for proportions, unequal sample sizes 
+
+
+Let's return to our undergraduate survey of alcohol consumption. It turns out 
+we were able to survey 543 males and 675 females. What's the power of our test
+if we're interested in being able to detect a "small" effect size.
+
+```{r}
+cohen.ES(test = "p", size = "small")
+pwr.2p2n.test(h = 0.2, n1 = 543, n2 = 675, sig.level = 0.05)
+```
+
+
+Let's say we previously surveyed 763 female undergraduates and found that _p_% 
+said they consumed alcohol once a week. We would like to survey some males and see 
+if a significantly different proportion respond yes. How many do I need to 
+sample to detect a small effect size (0.2) in either direction with 80% power
+and a significance level of 0.05?
+
+```{r}
+pwr.2p2n.test(h = 0.2, n1 = 763, power = 0.8, sig.level = 0.05)
+
+```
+
+### pwr.t.test - one-sample and two-sample t tests for means 
+
+We're interested to know if there is a difference in the mean price of
+what male and female students pay at a library coffee shop. Let's say we
+randomly observe 30 male and 30 female students check out from the coffee shop
+and calculate the mean purchase price for each gender. How powerful is this experiment if I want
+to detect a "medium" effect in either direction?
+
+```{r}
+cohen.ES(test = "t", size = "medium")
+pwr.t.test(n = 30, d = 0.5, sig.level = 0.05)
+```
+
+Only 48%. Not very powerful. How many students should we observe for a test with 80% power?
+
+```{r}
+pwr.t.test(d = 0.5, power = 0.80, sig.level = 0.05)
+
+```
+
+About 64 per group.
+
+Let's say we want to be able to detect a difference of at least 75
+cents in the mean purchase price. We convert that to an effect size using the following formula:
+
+$$d = \frac{m_{1} - m_{2}}{\sigma} $$
+
+where $m_{1}$ and $m_{2}$ are the means of each group, respectively, and $\sigma$ is the common standard deviation of the two groups.
+
+We have $m_{1} - m_{2} =$ 0.75. We need to make a guess at the population standard deviation. If we have
+absolutely no idea, one rule of thumb is to take the difference between the 
+maximum and minimum values and divide by 4 (or 6). Let's say the maximum purchase is $10 and the minimum purchase is $1. Our estimated standard deviation is (10 - 1)/4 = 2.25. Therefore our effect size is 0.75/2.25 $\approx$ 0.333.
+
+```{r}
+d <- 0.75/2.25
+pwr.t.test(d = d, power = 0.80, sig.level = 0.05)
+
+```
+
+For a desired power of 80%, Type I error tolerance of 0.05, and a hypothesized effect size of 0.333, we should sample at least 143 per group.
+
+Performing the same analsis with the base R function `power.t.test` is a little easier. The difference $m_{1} - m_{2} =$ 0.75 is entered in the `delta` argument and the estimated $\sigma$ = 2.25 is entered in the `sd` argument:
+
+```{r}
+power.t.test(delta = 0.75, sd = 2.25, sig.level = 0.05, power = 0.8)
+
+```
+
+
+To calculate power and sample size for one-sample t-tests, we need to set the `type` argument to `"one.sample"`. By default it is set to `"two.sample"`.
+
+For example, we think the average purchase price at the Library coffee shop is over
+$3 per student. Our null is $3 or less; our alternative is greater than $3. We can use a one-sample t-test to investigate this hunch. If 
+the true average purchase price is $3.50, we would like to have 90% power to 
+declare the estimated average purchase price is greater than $3. How many 
+transactions do we need to observe assuming a significance level of 0.05? Let's
+say the maximum purchase price is $10 and the minimum is $1. So our guess at a standard
+deviation is 9/4 = 2.25. 
+
+```{r}
+d <- 0.50/2.25
+pwr.t.test(d = d, sig.level = 0.05, power = 0.90, alternative = "greater", 
+           type = "one.sample")
+
+```
+
+
+or with `power.t.test`, setting `type = "one.sample"` and `alternative = "one.sided"`:
+
+```{r}
+power.t.test(delta = 0.50, sd = 2.25, power = 0.90, sig.level = 0.05, 
+             alternative = "one.sided", type = "one.sample")
+
+```
+
+
+"Paired" t-tests are basically the same as one-sample t-tests, except our one sample is usually a differences in pairs. The following example should make this clear.
+
+24 high school boys are put on a ultraheavy rope-jumping program. 
+Does this decrease their 40-yard dash time (ie, make them faster)? We'll
+measure their 40 time before the program and after. We'll use a paired t-test
+to see if the difference in times is greater than 0 (before - after). Assume
+the standard deviation of the differences will be about 0.25. How powerful is
+the test to detect a difference of about 0.08 with 0.05 significance?
+
+Notice we set `type = "paired"`:
+
+```{r}
+pwr.t.test(n = 24, d = 0.08 / 0.25, 
+           type = "paired", alternative = "greater")
+
+```
+
+Not all that powerful. How many high school boys should we sample for 80% power?
+
+```{r}
+pwr.t.test(d = 0.08 / 0.25, power = 0.8,
+           type = "paired", alternative = "greater")
+
+```
+
+About 62.
+
+### pwr.t2n.test - two-sample t test for means, unequal sample sizes
+
+Find power for a two-sample t-test with 28 in one group and 35 in the other group and a
+medium effect size. (sig.level defaults to 0.05.)
+
+```{r}
+pwr.t2n.test(n1 = 28, n2 = 35, d = 0.5)
+
+```
+
+### pwr.chisq.test - Goodness of fit test
+
+(From Cohen, example 7.1) A market researcher is seeking to determine
+preference among 4 package designs. He arranges to have a panel of 100 
+consumers rate their favorite package design. He wants to perform a chi-square
+goodness of fit test against the null of equal preference (25% for each
+design) with a significance level of 0.05. What's the power of the test if 3/8
+of the population actually prefers one of the designs and the remaining 5/8
+are split over the other 3 designs?
+
+We use the `ES.w1` function to calculate effect size. To do so, we need to create vectors of null and alternative
+proportions:
+
+```{r}
+null <- rep(0.25, 4)
+alt <- c(3/8, rep((5/8)/3, 3))
+ES.w1(null,alt)
+
+```
+
+To calculate power, specify effect size (`w`), sample size (`N`), and degrees of freedom (`df` = 4 - 1).
+
+```{r}
+pwr.chisq.test(w=ES.w1(null,alt), N=100, df=(4-1), sig.level=0.05)
+
+```
+
+
+How many subjects do we need to achieve 80% power?
+
+```{r}
+pwr.chisq.test(w=ES.w1(null,alt), df=(4-1), power=0.8, sig.level = 0.05)
+
+```
+
+If our alternative is correct then we need to survey at least 131 people to
+detect this with 80% power.
+
+### pwr.chisq.test - test of association
+
+
+We want to see if there's an association between gender and flossing
+teeth among college students. We randomly sample 100 students (male and female) and
+ask whether or not they floss daily. We want to carry out a chi-square test of 
+association to determine if there's an association between these two 
+variables. I set my significance level to 0.01. To determine effect 
+size I need to propose an alternative hypothesis, which in this case is a 
+table of proportions. I propose the following:
+
+
+ gender | Floss |No Floss
+--|------|--------  
+Male |  0.1  |    0.4
+Female  | 0.2   |   0.3
+
+We use the `ES.w2` function to calculate effect size for chi-square tests of association
+
+```{r}
+prob <- matrix(c(0.1,0.2,0.4,0.3), ncol=2, 
+               dimnames = list(c("M","F"),c("Floss","No Floss")))
+prob
+
+```
+
+
+Even proportion of male and female, but I want to detect if at least 10% more
+females floss.
+
+Now use the matrix to calculate effect size:
+```{r}
+ES.w2(prob)
+
+```
+
+
+We also need degrees of freedom. `df` = (2 - 1) * (2 - 1) = 1
+
+And now to calculate power:
+```{r}
+pwr.chisq.test(w = ES.w2(prob), N = 100, df = 1, sig.level = 0.01)
+
+```
+
+At only 35%, this is not a very powerful experiment. How many students should I survey if I wish to achieve 90% power?
+```{r}
+pwr.chisq.test(w = ES.w2(prob), power = 0.9, df = 1, sig.level = 0.01)
+
+```
+
+
+If you don't suspect association in either direction, or you don't feel like
+building a matrix in R, you can try a conventional effect size. For example, how many students should we sample to detect a small effect?
+
+```{r}
+cohen.ES(test = "chisq", size = "small")
+pwr.chisq.test(w = 0.1, power = 0.9, df = 1, sig.level = 0.01)
+
+```
+
+
+We might also consider reframing the question as a two-sample proportion test. What sample 
+size do we need to detect a small effect in gender on the proportion of
+students who floss with 90% power and a significance level of 0.01?
+
+```{r}
+pwr.2p.test(h = 0.2, sig.level = 0.01, power = 0.9)
+
+```
+
+Notice this returns the same sample size as the previous calculation with `pwr.chisq.test`, except divided by 2 since it's _per group_.
+
+
+### pwr.r.test - correlation test
+
+A web developer wants to conduct an experiment with one of her sites. 
+She wants to randomly select a group of people, ranging in 
+age from 18 - 65, and time them how long it takes them to complete a task, say
+locate some piece of information. She suspects there may be a "small" positive 
+linear relationship between time it takes to complete the task and age. How 
+many subjects does she need to detect this positive (ie, _r_ > 0) relationship with
+80% power and 0.01 significance level?
+
+```{r}
+cohen.ES(test = "r", size = "small")
+pwr.r.test(r = 0.1, sig.level = 0.01, power = 0.8, alternative = "greater")
+
+```
+
+
+The default is a two-sided test. We specify `alternative = "greater"` since we 
+believe there is small positive effect. 
+
+If she just wants to detect a small effect in either direction (positive or
+negative correlation), use the default settings of "two.sided"
+
+```{r}
+pwr.r.test(r = 0.1, sig.level = 0.01, power = 0.8, alternative = "two.sided")
+
+```
+
+There is nothing tricky about the effect size argument, `r`, for this test. It is simply the hypothesized correlation.
+
+
+### pwr.anova.test - balanced one-way analysis of variance tests
+
+The driver of a diesel-powered car decides to test the quality of three types of fuel sold in his area
+based on the miles per gallon (mpg) his car gets on each fuel. He will use a balanced one-way ANOVA to test the null that the mean mpg is the same for each fuel versus the alternative that the means are different. ("balanced" means equal sample size in each group; "one-way" means one grouping variable.) How many times does he need to try each fuel to have 90% power to detect a "medium" effect with a significance of 0.01?
+
+```{r}
+cohen.ES(test = "anov", size = "medium")
+pwr.anova.test(k = 3, f = 0.25, sig.level = 0.01, power = 0.9)
+
+```
+
+He would need to measure mpg 95 times for each type of fuel. His experiment may take a while to complete.
+
+The effect size `f` is calculated as follows:
+
+$$f = \frac{\sigma_{means}}{\sigma_{pop'n}}$$
+
+where $\sigma_{means}$ is the standard deviation of the _k_ means and $\sigma_{pop'n}$ is the common standard deviation of the _k_ groups. These two quantities are also known as the _between-group_ and _within-group_ standard deviations. If our driver suspects the between-group standard deviation is 5 mpg and the within-group standard deviation is 3 mpg, `f` = 5/3. 
+
+```{r}
+pwr.anova.test(k = 3, f = 5/3, sig.level = 0.01, power = 0.9)
+```
+
+In this case he only needs to try each fuel 4 times. Clearly the hypothesized effect has important consequences in estimating an optimum effect size.
+
+We can also use the `power.anova.test` function that comes with base R. It requires between-group and within-group _variances_. To get the same result as `pwr.anova.test` we need to square the standard deviations to get variances and multiply the between-group variance by $\frac{k}{k-1}$. This is because the effect size formula for the ANOVA test assumes the between-group variance has a demoninator of _k_ instead of _k - 1_.
+
+```{r}
+power.anova.test(groups = 3, 
+                 within.var = 3^2, 
+                 between.var = 5^2 * (3/2), 
+                 sig.level = 0.01, power = 0.90)
+```
+
+
+
+
+### pwr.f2.test - test for the general linear model
+
+A director of admissions at a universty wants to determine how accurately students' grade-point 
+averages (gpa) at the end of their first year can be predicted or explained by SAT scores and high school class rank.
+A common approach to answering this kind of question is to model gpa as a function of SAT score and class rank. Or to put another way, performing a multiple regression with gpa as the dependent variable and SAT and class rank as independent variables. 
+
+The null hypothesis is that none of the independent variables explain any of the variability in gpa. This would mean their regression coefficients are statistically indistinguishable from 0. The alternative is that at least one of the coefficients is not 0. This is tested with an F test. 
+
+The F test has numerator and denominator degrees of freedom. The numerator degrees of freedom, `u`, is the number of coefficients you'll have in your model (minus the intercept). In our example, `u = 2`. The denominator degrees of freedom, `v`, is the number of error degrees of freedom: $v = n - u - 1$. This implies $n = v + u + 1$.
+
+The effect size, `f2`, is $R^{2}/(1 - R^{2})$, where $R^{2}$ is the coefficient
+of determination, aka the "proportion of variance explained".
+To determine effect size you hypothesize the proportion of
+variance your model explains, or the $R^{2}$. For example, if I think my model explains 45% of the variance in my dependent variable, the effect size is $0.45/(1 - 0.45) \approx 0.81$.
+
+Returning to our example, let's say the director of admissions hypothesizes his model explains about 30% of the variability in gpa. How large of a sample does he need to take to detect this effect with 80% power at a 0.001 significance level?
+
+```{r}
+pwr.f2.test(u = 2, f2 = 0.3/(1 - 0.3), sig.level = 0.001, power = 0.8)
+```
+
+What is the power of our test with 40 subjects and a significance level of 0.01? Recall $v = n - u - 1$.
+
+```{r}
+pwr.f2.test(u = 2, v = 42 - 2 - 1, f2 = 0.3/(1 - 0.3), sig.level = 0.01)
+
+```
+
+
+### References and Further Reading
+
+Cohen, J. (1988). _Statistical Power Analysis for the Behavioral Sciences (2nd ed.)_. LEA.  
+Dalgaard, P. (2002). _Introductory Statistics with R_. Springer. (Ch. 2)    
+Hogg, R and Tanis, E. (2006). _Probability and Statistical Inference (7th ed.)_. Pearson. (Ch. 9)  
+Kabacoff, R. (2011). _R in Action_. Manning. (Ch. 10)   
+Ryan, T. (2013). _Sample Size Determination and Power_. Wiley.   
