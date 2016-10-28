@@ -35,7 +35,7 @@ Type II error, $\beta$, is the probability of failing to reject the null hypothe
 
 The pwr package provides a generic `plot` function that allows us to see how power changes as we change our sample size. If you have the ggplot2 package installed, it will create a plot using `ggplot`. Otherwise base R graphics are used.
 
-```{r fig.height=5, fig.width=7}
+```{r fig.height=5, fig.width=5}
 p.out <- pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
                     sig.level = 0.05, 
                     power = 0.80, 
@@ -66,7 +66,7 @@ pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
 
 ## More on effect size
 
-Cohen describes effect size as "the degree to which the null hypothesis is false." In our coin flipping example, this is the difference between 75% and 50%. We could say the effect was 25% but recall we had to transform the absolute difference in proportions to another quantity using the `ES.h` function. This is a crucial part of using the pwr package correctly. _You must provide an effect size on the expected scale._ Entering an incorrect effect size will produce wrong sample size and power calculations. 
+Cohen describes effect size as "the degree to which the null hypothesis is false." In our coin flipping example, this is the difference between 75% and 50%. We could say the effect was 25% but recall we had to transform the absolute difference in proportions to another quantity using the `ES.h` function. This is a crucial part of using the pwr package correctly. _You must provide an effect size on the expected scale._ Doing otherwise will produce wrong sample size and power calculations. 
 
 When in doubt, we can use _Conventional Effect Sizes_. These are pre-determined effect sizes for "small", "medium", and "large" effects. The `cohen.ES` function returns a conventional effect size for a given test and size. For example, the medium effect size for the correlation test is 0.3:
 
@@ -135,19 +135,19 @@ pwr.2p.test(h = ES.h(p1 = 0.55, p2 = 0.50), sig.level = 0.05, power = .80)
 
 Notice the sample size is _per group_. We need to sample 1,565 males and 1,565 females to detect the 5% difference with 80% power. 
 
-If we think one group proportion is 15% and the other 10%:
+If we think one group proportion is 10% and the other 5%:
 
 ```{r}
-pwr.2p.test(h = ES.h(p1 = 0.15, p2 = 0.10), sig.level = 0.05, power = .80)
+pwr.2p.test(h = ES.h(p1 = 0.10, p2 = 0.05), sig.level = 0.05, power = .80)
 
 ```
 
-Even though the absolute difference between proportions is the same (5%), the optimum sample size is now 681 per group. 15% vs 10% is actually a bigger difference than 55% vs 50%. A heuristic approach for understanding why is to take the ratios: 55/50 = 1.1 while 15/10 = 1.5. 
+Even though the absolute difference between proportions is the same (5%), the optimum sample size is now 424 per group. 10% vs 5% is actually a bigger difference than 55% vs 50%. A heuristic approach for understanding why is to compare the ratios: 55/50 = 1.1 while 10/5 = 2. 
 
 The `ES.h` function performs an arcsine transformation on both proportions and returns the difference. By setting `p2` to 0, we can see the transformed value for `p1`. We can exploit this to help us visualize how the transformation creates larger effects for two proportions closer to 0 or 1. Below we plot transformed proportions versus untransformed proportions and then compare the distance between pairs of proportions on each axis.
 
 
-```{r fig.height=5, fig.width=7}
+```{r fig.height=5, fig.width=5}
 addSegs <- function(p1, p2){
   tp1 <- ES.h(p1, 0); tp2 <- ES.h(p2, 0)
   segments(p1,0,p1,tp1, col="blue"); segments(p2,0,p2,tp2,col="blue")
@@ -156,8 +156,8 @@ addSegs <- function(p1, p2){
 
 curve(expr = ES.h(p1 = x, p2 = 0), xlim = c(0,1),
       xlab = "proportion", ylab = "transformed proportion")
-addSegs(p1 = 0.5, p2 = 0.55) # 50% vs 55%
-addSegs(p1 = 0.05, p2 = 0.1) # 5% vs 10%
+addSegs(p1 = 0.50, p2 = 0.55) # 50% vs 55%
+addSegs(p1 = 0.05, p2 = 0.10) # 5% vs 10%
 ```
 
 The differences on the x-axis between the two pairs of proportions is the same (0.05), but the difference is larger for 5% vs 10% on the y-axis. The `ES.h` function returns the distance between the red lines.
@@ -290,10 +290,10 @@ power.t.test(delta = 0.50, sd = 2.25, power = 0.90, sig.level = 0.05,
 
 (_From Hogg & Tanis, exercise 6.5-12_) 24 high school boys are put on a ultra-heavy rope-jumping program. 
 Does this decrease their 40-yard dash time (i.e., make them faster)? We'll
-measure their 40 time before the program and after. We'll use a paired t-test
+measure their 40 time in seconds before the program and after. We'll use a paired t-test
 to see if the difference in times is greater than 0 (before - after). Assume
-the standard deviation of the differences will be about 0.25. How powerful is
-the test to detect a difference of about 0.08 with 0.05 significance?
+the standard deviation of the differences will be about 0.25 seconds. How powerful is
+the test to detect a difference of about 0.08 seconds with 0.05 significance?
 
 Notice we set `type = "paired"`:
 
@@ -416,7 +416,7 @@ pwr.chisq.test(w = ES.w2(prob), N = 100, df = 1, sig.level = 0.01)
 
 ```
 
-At only 35%, this is not a very powerful experiment. How many students should I survey if I wish to achieve 90% power?
+At only 35% this is not a very powerful experiment. How many students should I survey if I wish to achieve 90% power?
 ```{r}
 pwr.chisq.test(w = ES.w2(prob), power = 0.9, df = 1, sig.level = 0.01)
 
@@ -543,11 +543,11 @@ Recall $n = v + u + 1$. Therefore he needs 50 + 2 + 1 = 53 student records.
 What is the power of the test with 40 subjects and a significance level of 0.01? Recall $v = n - u - 1$.
 
 ```{r}
-pwr.f2.test(u = 2, v = 42 - 2 - 1, f2 = 0.3/(1 - 0.3), sig.level = 0.01)
+pwr.f2.test(u = 2, v = 40 - 2 - 1, f2 = 0.3/(1 - 0.3), sig.level = 0.01)
 
 ```
 
-About 87%.
+Power is about 84%.
 
 ### References and Further Reading
 
