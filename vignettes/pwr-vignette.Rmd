@@ -65,24 +65,24 @@ p.out <- pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
 plot(p.out)
 ```
 
-What is the power of our test if we flip the coin 50 times and lower our Type I error tolerance to 0.01? Notice we leave out the `power` argument, add `n = 50`, and change `sig.level = 0.01`:
+What is the power of our test if we flip the coin 40 times and lower our Type I error tolerance to 0.01? Notice we leave out the `power` argument, add `n = 40`, and change `sig.level = 0.01`:
 
 ```{r}
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
                     sig.level = 0.01, 
-                    n = 50,
+                    n = 40,
                     alternative = "greater")
 
 ```
 
-The power of our test is greater than 90%. 
+The power of our test is about 84%. 
 
-We specified `alternative = "greater"` since we assumed the coin was loaded for more heads (not less). This is a stronger assumption than assuming that the coin is simply unfair in one way or another. In practice, sample size and power calculations will usually make the more conservative "two-sided" assumption. In fact this is the default for pwr functions with an `alternative` argument. If we wish to assume a "two-sided" alternative, we can simply leave it out of the function. Notice the increase in sample size from 23 to 29 if we assume a "two-sided" alternative:
+We specified `alternative = "greater"` since we assumed the coin was loaded for more heads (not less). This is a stronger assumption than assuming that the coin is simply unfair in one way or another. In practice, sample size and power calculations will usually make the more conservative "two-sided" assumption. In fact this is the default for pwr functions with an `alternative` argument. If we wish to assume a "two-sided" alternative, we can simply leave it out of the function. Notice how our power estimate drops below 80% when we do this.
 
 ```{r}
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
-           sig.level = 0.05,
-           power = 0.80)
+                    sig.level = 0.01, 
+                    n = 40)
 ```
 
 
