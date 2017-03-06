@@ -13,6 +13,9 @@ plot.power.htest <- function (x, ...){
   # case: One-sample, Two-sample or Paired t test
   if(x$method == "One-sample t test power calculation" || x$method == "Two-sample t test power calculation" || x$method == "Paired t test power calculation")
   {
+    if(x$method == "One-sample t test power calculation"){x$type = "one.sample"}
+    if(x$method == "Two-sample t test power calculation"){x$type = "two.sample"}
+    if(x$method == "Paired t test power calculation"){x$type = "paired"}
     n <- x$n
     n_upper <- max(n*1.5, n+30) # upper at least 30 above n
     
