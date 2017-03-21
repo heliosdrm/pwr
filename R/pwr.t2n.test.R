@@ -52,10 +52,10 @@ ncp = d*(1/sqrt(1/n1+1/n2)), lower = FALSE)
         power <- eval(p.body)
     else if (is.null(n1)) 
         n1 <- uniroot(function(n1) eval(p.body) - power, c(2 + 
-            1e-10, 1e+07))$root
+            1e-10, 1e+09))$root
   else if (is.null(n2)) 
         n2 <- uniroot(function(n2) eval(p.body) - power, c(2 + 
-            1e-10, 1e+07))$root
+            1e-10, 1e+09))$root
     else if (is.null(d)) {
  	if(ttside==2){       d <- uniroot(function(d) eval(p.body) - power, 
 c(1e-07, 10))$root}

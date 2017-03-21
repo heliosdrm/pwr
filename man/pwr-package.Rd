@@ -37,8 +37,8 @@ This package contains functions for basic power calculations using effect sizes 
 }
 \author{
 Stephane Champely, based on previous works by Claus Ekstrom and Peter Dalgaard,
-with contributions of Jeffrey Gill, Stephan Weibelzahl, Clay Ford
-and Robert Volcic.
+with contributions of Jeffrey Gill, Stephan Weibelzahl, Clay Ford,
+Aditya Anandkumar and Robert Volcic.
 
 Maintainer: Helios De Rosario-Martinez <helios.derosario@gmail.com>
 }

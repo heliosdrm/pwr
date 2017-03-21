@@ -28,7 +28,7 @@ function (k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
             1e-10, 100))$root
     else if (is.null(n)) 
         n <- uniroot(function(n) eval(p.body) - power, c(2 + 
-            1e-10, 1e+05))$root
+            1e-10, 1e+09))$root
     else if (is.null(f)) 
         f <- uniroot(function(f) eval(p.body) - power, c(1e-07, 
             1e+07))$root

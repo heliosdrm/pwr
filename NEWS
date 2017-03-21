@@ -4,6 +4,8 @@
 
 * vignettes/pwr-vignette.Rmd: New vignette by Clay Ford
 
+* R: Add upper limits of n (Aditya Anandkumar's pull request)
+
 * R/plot.pwer.htest: Robert Volcic's fix for pwr.t.test
 
 * NEWS: ChangeLog moved to "NEWS" file

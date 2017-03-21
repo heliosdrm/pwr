@@ -53,10 +53,10 @@ function (h = NULL, n1 = NULL, n2 = NULL, sig.level = 0.05, power = NULL,
 }
     else if (is.null(n1)) 
         n1 <- uniroot(function(n1) eval(p.body) - power, c(2 + 
-            1e-10, 1e+05))$root
+            1e-10, 1e+09))$root
     else if (is.null(n2)) 
         n2 <- uniroot(function(n2) eval(p.body) - power, c(2 + 
-            1e-10, 1e+05))$root
+            1e-10, 1e+09))$root
     else if (is.null(sig.level)) 
         sig.level <- uniroot(function(sig.level) eval(p.body) - 
             power, c(1e-10, 1 - 1e-10))$root

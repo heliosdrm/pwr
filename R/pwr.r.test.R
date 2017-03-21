@@ -51,7 +51,7 @@ r<--r
         power <- eval(p.body)
     else if (is.null(n)) 
         n <- uniroot(function(n) eval(p.body) - power, c(4 + 
-            1e-10, 1e+07))$root
+            1e-10, 1e+09))$root
     else if (is.null(r)) 
         {
 	if(tside==2){r <- uniroot(function(r) eval(p.body) - power, 
