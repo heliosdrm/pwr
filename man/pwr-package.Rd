@@ -15,8 +15,8 @@ Power calculations along the lines of Cohen (1988)
 \tabular{ll}{
 Package: \tab pwr\cr
 Type: \tab Package\cr
-Version: \tab 1.2-0\cr
-Date: \tab 2016-08-06\cr
+Version: \tab 1.2-1\cr
+Date: \tab 2017-03-21\cr
 License: \tab GPL (>= 3) \cr
 }
 This package contains functions for basic power calculations using effect sizes and 
@@ -37,7 +37,8 @@ This package contains functions for basic power calculations using effect sizes 
 }
 \author{
 Stephane Champely, based on previous works by Claus Ekstrom and Peter Dalgaard,
-with contributions of Jeffrey Gill and Stephan Weibelzahl.
+with contributions of Jeffrey Gill, Stephan Weibelzahl, Clay Ford
+and Robert Volcic.
 
 Maintainer: Helios De Rosario-Martinez <helios.derosario@gmail.com>
 }

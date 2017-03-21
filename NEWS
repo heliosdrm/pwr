@@ -1,3 +1,13 @@
+2017-03-21
+
+* Version 1.2-1
+
+* vignettes/pwr-vignette.Rmd: New vignette by Clay Ford
+
+* R/plot.pwer.htest: Robert Volcic's fix for pwr.t.test
+
+* NEWS: ChangeLog moved to "NEWS" file
+
 2016-08-06 Helios De Rosario-Martinez <helios.derosario@gmail.com>
 
 * Version 1.2-0
