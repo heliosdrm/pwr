@@ -1,6 +1,6 @@
 ---
 title: "Getting started with the pwr package"
-# author: "Clay Ford"
+author: "Clay Ford"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
