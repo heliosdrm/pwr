@@ -592,5 +592,5 @@ Kabacoff, R. (2011). _R in Action_. Manning. (Ch. 10)
 Kutner, et al. (2005). _Applied Linear Statistical Models_. McGraw-Hill. (Ch. 16)   
 Ryan, T. (2013). _Sample Size Determination and Power_. Wiley.   
 
-The [CRAN Task View for Clinical Trial Design, Monitoring, and Analysis](https://cran.r-project.org/web/views/ClinicalTrials.html) lists various R packages that also perform sample size and power calculations. 
+The [CRAN Task View for Clinical Trial Design, Monitoring, and Analysis](https://CRAN.R-project.org/view=ClinicalTrials) lists various R packages that also perform sample size and power calculations. 
 
