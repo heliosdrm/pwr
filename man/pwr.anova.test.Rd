@@ -17,7 +17,7 @@ pwr.anova.test(k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
   \item{power}{Power of test (1 minus Type II error probability)}
 }
 \details{
- Exactly one of the parameters 'k','n','h','power' and
+ Exactly one of the parameters 'k','n','f','power' and
      'sig.level' must be passed as NULL, and that parameter is
      determined from the others. Notice that the last one has non-NULL
      default so NULL must be explicitly passed if you want to compute

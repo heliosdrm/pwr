@@ -12,7 +12,8 @@ pwr.t.test(n = NULL, d = NULL, sig.level = 0.05, power = NULL,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{n}{Number of observations (per sample)}
-  \item{d}{Effect size}
+  \item{d}{Effect size (Cohen's d) - difference between the means divided by the
+           pooled standard deviation}
   \item{sig.level}{Significance level (Type I error probability)}
   \item{power}{Power of test (1 minus Type II error probability)}
   \item{type}{Type of t test : one- two- or paired-samples}
