@@ -1,6 +1,6 @@
 Package: pwr
-Version: 1.2-1
-Date: 2017-03-25
+Version: 1.2-2
+Date: 2018-03-03
 Title: Basic Functions for Power Analysis
 Authors@R: c(person("Stephane", "Champely", role=c("aut")),
   person("Claus", "Ekstrom", role="ctb"),

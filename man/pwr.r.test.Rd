@@ -7,7 +7,7 @@
      power (same as power.anova.test).}
 
 \usage{
-pwr.r.test(n = NULL, r = NULL, sig.level = 0.05, power = NULL, 
+pwr.r.test(n = NULL, r = NULL, sig.level = 0.05, power = NULL,
     alternative = c("two.sided", "less","greater"))}
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,8 +19,11 @@ pwr.r.test(n = NULL, r = NULL, sig.level = 0.05, power = NULL,
           must be one of "two.sided" (default), "greater" or
           "less"}}
 \details{
-These calculations use the Z' transformation of correlation coefficient : 
-	Z'=arctanh(r)+r/(2*(n-1)) (see Cohen (1988) p.546).
+These calculations use the Z' transformation of correlation coefficient :
+	Z'=arctanh(r)+r/(2*(n-1)) and a bias correction is applied. Note that
+	contrary to Cohen (1988) p.546, where zp' = arctanh(rp) + rp/(2*(n-1))
+	and zc' = arctanh(rc) + rc/(2*(n-1)), we only use here
+	zp' = arctanh(rp) + rp/(2*(n-1)) and zc' = arctanh(rc).
 
  Exactly one of the parameters 'r','n','power' and
      'sig.level' must be passed as NULL, and that parameter is
@@ -36,8 +39,10 @@ These calculations use the Z' transformation of correlation coefficient :
 }
 \references{Cohen, J. (1988). Statistical power analysis for the
 	behavioral sciences (2nd ed.). Hillsdale,NJ: Lawrence Erlbaum.}
-\author{Stephane Champely <champely@univ-lyon1.fr> but this is a mere copy of Peter Dalgaard work (power.t.test)}
-\note{  
+\author{Stephane Champely <champely@univ-lyon1.fr> but this is a mere copy of
+	Peter Dalgaard work (power.t.test). The modified bias correction is
+	contributed by Jeffrey Gill.}
+\note{
 'uniroot' is used to solve power equation for unknowns, so you may
      see errors from it, notably about inability to bracket the root
      when invalid arguments are given.
