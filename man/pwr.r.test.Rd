@@ -20,7 +20,7 @@ pwr.r.test(n = NULL, r = NULL, sig.level = 0.05, power = NULL,
           "less"}}
 \details{
 These calculations use the Z' transformation of correlation coefficient :
-	Z'=arctanh(r)+r/(2*(n-1)) and a bias correction is applied. Note that
+	Z'=arctanh(r) and a bias correction is applied. Note that
 	contrary to Cohen (1988) p.546, where zp' = arctanh(rp) + rp/(2*(n-1))
 	and zc' = arctanh(rc) + rc/(2*(n-1)), we only use here
 	zp' = arctanh(rp) + rp/(2*(n-1)) and zc' = arctanh(rc).
