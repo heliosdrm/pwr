@@ -4,8 +4,12 @@ function (k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
     if (sum(sapply(list(k, n, f, power, sig.level), is.null)) !=
         1)
         stop("exactly one of k, n, f, power, and sig.level must be NULL")
-    if (!is.null(f) && any(f < 0))
-        stop("f must be positive")
+    if (!is.null(f)){
+        if (is.character(f))
+            f <- cohen.ES(test="anov",size=f)$effect.size
+        if (any(f < 0))
+            stop("f must be positive")
+    }
     if (!is.null(k) && any(k < 2))
         stop("number of groups must be at least 2")
     if (!is.null(n) && any(n < 2))
@@ -13,7 +17,7 @@ function (k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
     if (!is.null(sig.level) && !is.numeric(sig.level) || any(0 >
         sig.level | sig.level > 1))
         stop(sQuote("sig.level"), " must be numeric in [0, 1]")
-    if (!is.null(power) && !is.numeric(power) || any(0 > power | 
+    if (!is.null(power) && !is.numeric(power) || any(0 > power |
         power > 1))
         stop(sQuote("power"), " must be numeric in [0, 1]")
     p.body <- quote({

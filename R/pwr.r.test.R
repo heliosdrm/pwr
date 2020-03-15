@@ -5,13 +5,15 @@ function (n = NULL, r = NULL, sig.level = 0.05, power = NULL,
     if (sum(sapply(list(n, r, power, sig.level), is.null)) !=
         1)
         stop("exactly one of n, r, power, and sig.level must be NULL")
+    if (!is.null(r) && is.character(r))
+        r <- cohen.ES(test="r",size=r)$effect.size
     if (!is.null(sig.level) && !is.numeric(sig.level) || any(0 >
         sig.level | sig.level > 1))
         stop(sQuote("sig.level"), " must be numeric in [0, 1]")
     if (!is.null(power) && !is.numeric(power) || any(0 > power |
         power > 1))
         stop(sQuote("power"), " must be numeric in [0, 1]")
-    if (!is.null(n) && any(n < 4)) 
+    if (!is.null(n) && any(n < 4))
         stop("number of observations must be at least 4")
     alternative <- match.arg(alternative)
     tside <- switch(alternative, less = 1, two.sided = 2,greater=3)

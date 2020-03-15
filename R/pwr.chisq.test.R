@@ -4,14 +4,18 @@ function (w = NULL, N = NULL, df = NULL, sig.level = 0.05, power = NULL)
     if (sum(sapply(list(w, N, df, power, sig.level), is.null)) !=
         1)
         stop("exactly one of w, N, df, power, and sig.level must be NULL")
-    if (!is.null(w) && any(w < 0))
-        stop("w must be positive")
+    if (!is.null(w)){
+        if (is.character(w))
+            w <- cohen.ES(test="chisq",size=w)$effect.size
+        if (any(w < 0))
+            stop("w must be positive")
+    }
     if (!is.null(N) && any(N < 1))
         stop("number of observations must be at least 1")
     if (!is.null(sig.level) && !is.numeric(sig.level) || any(0 >
         sig.level | sig.level > 1))
         stop(sQuote("sig.level"), " must be numeric in [0, 1]")
-    if (!is.null(power) && !is.numeric(power) || any(0 > power | 
+    if (!is.null(power) && !is.numeric(power) || any(0 > power |
         power > 1))
         stop(sQuote("power"), " must be numeric in [0, 1]")
     p.body <- quote({

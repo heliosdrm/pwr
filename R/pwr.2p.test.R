@@ -5,7 +5,9 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
     if (sum(sapply(list(h, n, power, sig.level), is.null)) !=
         1)
         stop("exactly one of h, n, power, and sig.level must be NULL")
-    if (!is.null(n) && any(n < 1)) 
+    if (!is.null(h) && is.character(h))
+        h <- cohen.ES(test="p",size=h)$effect.size
+    if (!is.null(n) && any(n < 1))
         stop("number of observations in each group must be at least 1")
     if (!is.null(sig.level) && !is.numeric(sig.level) || any(0 >
         sig.level | sig.level > 1))
