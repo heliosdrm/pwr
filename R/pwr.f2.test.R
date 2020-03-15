@@ -4,8 +4,12 @@ function (u = NULL, v = NULL, f2 = NULL, sig.level = 0.05, power = NULL)
     if (sum(sapply(list(u,v, f2, power, sig.level), is.null)) !=
         1)
         stop("exactly one of u, v, f2, power, and sig.level must be NULL")
-    if (!is.null(f2) && any(f2 < 0))
-        stop("f2 must be positive")
+    if (!is.null(f2)){
+        if (is.character(f2))
+            f2 <- cohen.ES(test="f2",size=f2)$effect.size
+        if (any(f2 < 0))
+            stop("f2 must be positive")
+    }
     if (!is.null(u) && any(u < 1))
         stop("degree of freedom u for numerator must be at least 1")
     if (!is.null(v) && any(v < 1))
@@ -29,7 +33,7 @@ function (u = NULL, v = NULL, f2 = NULL, sig.level = 0.05, power = NULL)
     else if (is.null(v))
         v <- uniroot(function(v) eval(p.body) - power, c(1 +
             1e-10, 1e+09))$root
-    else if (is.null(f2)) 
+    else if (is.null(f2))
         f2 <- uniroot(function(f2) eval(p.body) - power, c(1e-07,
             1e+07))$root
     else if (is.null(sig.level))

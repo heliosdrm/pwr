@@ -5,6 +5,8 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
     if (sum(sapply(list(h, n, power, sig.level), is.null)) !=
         1)
         stop("exactly one of h, n, power, and sig.level must be NULL")
+    if (!is.null(h) && is.character(h))
+        h <- cohen.ES(test="p",size=h)$effect.size
     if (!is.null(n) && any(n < 1))
         stop("number of observations in each group must be at least 1")
     if (!is.null(sig.level) && !is.numeric(sig.level) || any(0 >
@@ -15,7 +17,7 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
         stop(sQuote("power"), " must be numeric in [0, 1]")
     alternative <- match.arg(alternative)
     tside <- switch(alternative, less = 1, two.sided = 2, greater=3)
-    if (tside == 2 && !is.null(h)) 
+    if (tside == 2 && !is.null(h))
         h <- abs(h)
     if (tside == 2) {
         p.body <- quote({
