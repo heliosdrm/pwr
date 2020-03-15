@@ -15,11 +15,11 @@ Power calculations along the lines of Cohen (1988)
 \tabular{ll}{
 Package: \tab pwr\cr
 Type: \tab Package\cr
-Version: \tab 1.2-2\cr
-Date: \tab 2018-03-03\cr
+Version: \tab 1.2-3\cr
+Date: \tab 2020-03-15\cr
 License: \tab GPL (>= 3) \cr
 }
-This package contains functions for basic power calculations using effect sizes and 
+This package contains functions for basic power calculations using effect sizes and
 	notations from Cohen (1988) :
 	pwr.p.test: test for one proportion (ES=h)
 	pwr.2p.test: test for two proportions (ES=h)
@@ -33,7 +33,7 @@ This package contains functions for basic power calculations using effect sizes 
 	ES.h: computing effect size h for proportions tests
 	ES.w1: computing effect size w for the goodness of fit chi-squared test
 	ES.w2: computing effect size w for the association chi-squared test
-	cohen.ES: computing effect sizes for all the previous tests corresponding to conventional effect sizes (small, medium, large) 
+	cohen.ES: computing effect sizes for all the previous tests corresponding to conventional effect sizes (small, medium, large)
 }
 \author{
 Stephane Champely, based on previous works by Claus Ekstrom and Peter Dalgaard,
@@ -48,7 +48,7 @@ Maintainer: Helios De Rosario-Martinez <helios.derosario@gmail.com>
 \keyword{htest}
 \seealso{power.t.test,power.prop.test,power.anova.test}
 \examples{
-## Exercise 8.1 P. 357 from Cohen (1988) 
+## Exercise 8.1 P. 357 from Cohen (1988)
 pwr.anova.test(f=0.28,k=4,n=20,sig.level=0.05)
 
 ## Exercise 6.1 p. 198 from Cohen (1988)

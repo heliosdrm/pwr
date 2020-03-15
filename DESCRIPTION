@@ -1,6 +1,6 @@
 Package: pwr
-Version: 1.2-2
-Date: 2018-03-03
+Version: 1.2-3
+Date: 2020-03-15
 Title: Basic Functions for Power Analysis
 Authors@R: c(person("Stephane", "Champely", role=c("aut")),
   person("Claus", "Ekstrom", role="ctb"),
@@ -20,4 +20,4 @@ Suggests: ggplot2, scales,
 License: GPL (>= 3)
 URL: https://github.com/heliosdrm/pwr
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0
