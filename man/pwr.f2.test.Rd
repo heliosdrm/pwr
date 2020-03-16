@@ -9,7 +9,7 @@ pwr.f2.test(u = NULL, v = NULL, f2 = NULL, sig.level = 0.05, power = NULL)
 }
 \arguments{
   \item{u}{degrees of freedom for numerator}
-  \item{v}{degrees of freedomfor denominator}
+  \item{v}{degrees of freedom for denominator}
   \item{f2}{effect size}
   \item{sig.level}{Significance level (Type I error probability)}
   \item{power}{Power of test (1 minus Type II error probability)}
@@ -29,14 +29,14 @@ pwr.f2.test(u = NULL, v = NULL, f2 = NULL, sig.level = 0.05, power = NULL)
 \references{Cohen, J. (1988). Statistical power analysis for the
 	behavioral sciences (2nd ed.). Hillsdale,NJ: Lawrence Erlbaum.}
 \author{Stephane Champely <champely@univ-lyon1.fr> but this is a mere copy of Peter Dalgaard work (power.t.test)}
-\note{  
+\note{
 'uniroot' is used to solve power equation for unknowns, so you may
      see errors from it, notably about inability to bracket the root
      when invalid arguments are given.
 }
 \examples{
 
-## Exercise 9.1 P. 424 from Cohen (1988) 
+## Exercise 9.1 P. 424 from Cohen (1988)
 pwr.f2.test(u=5,v=89,f2=0.1/(1-0.1),sig.level=0.05)
 }
 \keyword{htest}

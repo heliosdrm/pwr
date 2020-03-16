@@ -28,9 +28,9 @@ function (n = NULL, r = NULL, sig.level = 0.05, power = NULL,
             pnorm((zr - zrc) * sqrt(n - 3))
         })
     }
-if (tside == 1) {
+    if (tside == 1) {
         p.body <- quote({
-r<--r
+            r<--r
             ttt <- qt(sig.level, df = n - 2, lower = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
@@ -54,17 +54,17 @@ r<--r
     else if (is.null(n))
         n <- uniroot(function(n) eval(p.body) - power, c(4 +
             1e-10, 1e+09))$root
-    else if (is.null(r))
-        {
-	if(tside==2){r <- uniroot(function(r) eval(p.body) - power,
-					c(1e-10,1 - 1e-10))$root}
-else {r <- uniroot(function(r) eval(p.body) - power,
-c(-1+1e-10, 1 - 1e-10))$root}
-
-}
+    else if (is.null(r)){
+        if(tside==2)
+            r <- uniroot(function(r) eval(p.body) - power,
+                c(1e-10,1 - 1e-10))$root
+        else
+            r <- uniroot(function(r) eval(p.body) - power,
+                c(-1+1e-10, 1 - 1e-10))$root
+    }
     else if (is.null(sig.level))
-        sig.level <- uniroot(function(sig.level) eval(p.body) -
-            power, c(1e-10, 1 - 1e-10))$root
+        sig.level <- uniroot(function(sig.level) eval(p.body) - power,
+            c(1e-10, 1 - 1e-10))$root
     else stop("internal error")
     METHOD <- "approximate correlation power calculation (arctangh transformation)"
     structure(list(n = n, r = r, sig.level = sig.level, power = power,

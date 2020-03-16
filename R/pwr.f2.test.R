@@ -28,17 +28,14 @@ function (u = NULL, v = NULL, f2 = NULL, sig.level = 0.05, power = NULL)
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(u))
-        u <- uniroot(function(u) eval(p.body) - power, c(1 +
-            1e-10, 100))$root
+        u <- uniroot(function(u) eval(p.body) - power, c(1 + 1e-10, 100))$root
     else if (is.null(v))
-        v <- uniroot(function(v) eval(p.body) - power, c(1 +
-            1e-10, 1e+09))$root
+        v <- uniroot(function(v) eval(p.body) - power, c(1 + 1e-10, 1e+09))$root
     else if (is.null(f2))
-        f2 <- uniroot(function(f2) eval(p.body) - power, c(1e-07,
-            1e+07))$root
+        f2 <- uniroot(function(f2) eval(p.body) - power, c(1e-07, 1e+07))$root
     else if (is.null(sig.level))
-        sig.level <- uniroot(function(sig.level) eval(p.body) -
-            power, c(1e-10, 1 - 1e-10))$root
+        sig.level <- uniroot(function(sig.level) eval(p.body) - power,
+            c(1e-10, 1 - 1e-10))$root
     else stop("internal error")
     METHOD <- "Multiple regression power calculation"
     structure(list(u = u, v = v, f2 = f2, sig.level = sig.level,

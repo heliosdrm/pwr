@@ -28,17 +28,14 @@ function (k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(k))
-        k <- uniroot(function(k) eval(p.body) - power, c(2 +
-            1e-10, 100))$root
+        k <- uniroot(function(k) eval(p.body) - power, c(2 + 1e-10, 100))$root
     else if (is.null(n))
-        n <- uniroot(function(n) eval(p.body) - power, c(2 +
-            1e-10, 1e+09))$root
+        n <- uniroot(function(n) eval(p.body) - power, c(2 + 1e-10, 1e+09))$root
     else if (is.null(f))
-        f <- uniroot(function(f) eval(p.body) - power, c(1e-07,
-            1e+07))$root
+        f <- uniroot(function(f) eval(p.body) - power, c(1e-07, 1e+07))$root
     else if (is.null(sig.level))
-        sig.level <- uniroot(function(sig.level) eval(p.body) -
-            power, c(1e-10, 1 - 1e-10))$root
+        sig.level <- uniroot(function(sig.level) eval(p.body) - power,
+            c(1e-10, 1 - 1e-10))$root
     else stop("internal error")
     NOTE <- "n is number in each group"
     METHOD <- "Balanced one-way analysis of variance power calculation"

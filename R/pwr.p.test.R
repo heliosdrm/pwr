@@ -32,30 +32,27 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
                 lower = FALSE)
         })
     }
-
-if (tside == 1) {
+    if (tside == 1) {
         p.body <- quote({
             pnorm(qnorm(sig.level, lower = TRUE) - h * sqrt(n),
                 lower = TRUE)
         })
     }
-
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(h)){
- 	if(tside==2){       h <- uniroot(function(h) eval(p.body) - power,
-					c(1e-10,10))$root}
-	if(tside==1){       h <- uniroot(function(h) eval(p.body) - power,
-					c(-10,5))$root}
-	if(tside==3){       h <- uniroot(function(h) eval(p.body) - power,
-					c(-5,10))$root}
-}
+        if(tside==2)
+            h <- uniroot(function(h) eval(p.body) - power, c(1e-10,10))$root
+        if(tside==1)
+            h <- uniroot(function(h) eval(p.body) - power, c(-10,5))$root
+        if(tside==3)
+            h <- uniroot(function(h) eval(p.body) - power, c(-5,10))$root
+    }
     else if (is.null(n))
-        n <- uniroot(function(n) eval(p.body) - power, c(2 +
-            1e-10, 1e+09))$root
+        n <- uniroot(function(n) eval(p.body) - power, c(2 + 1e-10, 1e+09))$root
     else if (is.null(sig.level))
-        sig.level <- uniroot(function(sig.level) eval(p.body) -
-            power, c(1e-10, 1 - 1e-10))$root
+        sig.level <- uniroot(function(sig.level) eval(p.body) - power,
+            c(1e-10, 1 - 1e-10))$root
     else stop("internal error")
     METHOD <- "proportion power calculation for binomial distribution (arcsine transformation)"
     structure(list(h = h, n = n, sig.level = sig.level, power = power,

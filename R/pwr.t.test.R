@@ -17,16 +17,15 @@ function (n = NULL, d = NULL, sig.level = 0.05, power = NULL,
     type <- match.arg(type)
     alternative <- match.arg(alternative)
     tsample <- switch(type, one.sample = 1, two.sample = 2, paired = 1)
-ttside<-switch(alternative, less = 1, two.sided = 2, greater=3)
-
+    ttside<-switch(alternative, less = 1, two.sided = 2, greater=3)
     tside <- switch(alternative, less = 1, two.sided = 2, greater =1)
     if (tside == 2 && !is.null(d))
         d <- abs(d)
     if (ttside == 1) {
         p.body <- quote({
             nu <- (n - 1) * tsample
-            pt(qt(sig.level/tside, nu, lower = TRUE), nu, ncp = sqrt(n/tsample) *
-                d, lower = TRUE)
+            pt(qt(sig.level/tside, nu, lower = TRUE), nu,
+                ncp = sqrt(n/tsample) * d, lower = TRUE)
         })
     }
     if (ttside == 2)  {
@@ -40,8 +39,8 @@ ttside<-switch(alternative, less = 1, two.sided = 2, greater=3)
 	if (ttside == 3) {
         p.body <- quote({
             nu <- (n - 1) * tsample
-            pt(qt(sig.level/tside, nu, lower = FALSE), nu, ncp = sqrt(n/tsample) *
-                d, lower = FALSE)
+            pt(qt(sig.level/tside, nu, lower = FALSE), nu,
+                ncp = sqrt(n/tsample) * d, lower = FALSE)
         })
     }
 
@@ -51,17 +50,16 @@ ttside<-switch(alternative, less = 1, two.sided = 2, greater=3)
         n <- uniroot(function(n) eval(p.body) - power, c(2 +
             1e-10, 1e+09))$root
     else if (is.null(d)) {
- 	if(ttside==2){       d <- uniroot(function(d) eval(p.body) - power, c(1e-07,
-            10))$root}
-if(ttside==1){       d <- uniroot(function(d) eval(p.body) - power, c(-10,
-            5))$root}
-if(ttside==3){       d <- uniroot(function(d) eval(p.body) - power, c(-5,
-            10))$root}
-
-}
+        if(ttside==2)
+            d <- uniroot(function(d) eval(p.body) - power, c(1e-07, 10))$root
+        if(ttside==1)
+            d <- uniroot(function(d) eval(p.body) - power, c(-10, 5))$root
+        if(ttside==3)
+            d <- uniroot(function(d) eval(p.body) - power, c(-5, 10))$root
+    }
     else if (is.null(sig.level))
-        sig.level <- uniroot(function(sig.level) eval(p.body) -
-            power, c(1e-10, 1 - 1e-10))$root
+        sig.level <- uniroot(function(sig.level) eval(p.body) - power,
+					c(1e-10, 1 - 1e-10))$root
     else stop("internal error")
     NOTE <- switch(type, paired = "n is number of *pairs*", two.sample = "n is number in *each* group",
         NULL)

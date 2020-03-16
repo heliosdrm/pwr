@@ -11,7 +11,7 @@
   \item{\dots}{Arguments to be passed to \code{ggplot} including xlab and ylab}
 }
 \details{
-Power calculations for the following tests are supported: t-test (pwr.t.test(), pwr.t2n.test()), chi squared test (pwr.chisq.test()), one-way ANOVA (pwr.anova.test(), standard normal distribution (pwr.norm.test()), pearson correlation (pwr.r.test()), proportions (pwr.p.test(), pwr.2p.test(), pwr.2p2n.test()))
+Power calculations for the following tests are supported: t-test (pwr.t.test(), pwr.t2n.test()), chi squared test (pwr.chisq.test()), one-way ANOVA (pwr.anova.test(), standard normal distribution (pwr.norm.test()), Pearson correlation (pwr.r.test()), proportions (pwr.p.test(), pwr.2p.test(), pwr.2p2n.test()))
 
 }
 \value{

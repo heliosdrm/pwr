@@ -25,14 +25,12 @@ function (w = NULL, N = NULL, df = NULL, sig.level = 0.05, power = NULL)
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(w))
-        w <- uniroot(function(w) eval(p.body) - power, c(1e-10,
-            1e+09))$root
+        w <- uniroot(function(w) eval(p.body) - power, c(1e-10, 1e+09))$root
     else if (is.null(N))
-        N <- uniroot(function(N) eval(p.body) - power, c(1 +
-            1e-10, 1e+09))$root
+        N <- uniroot(function(N) eval(p.body) - power, c(1 + 1e-10, 1e+09))$root
     else if (is.null(sig.level))
-        sig.level <- uniroot(function(sig.level) eval(p.body) -
-            power, c(1e-10, 1 - 1e-10))$root
+        sig.level <- uniroot(function(sig.level) eval(p.body) - power,
+            c(1e-10, 1 - 1e-10))$root
     else stop("internal error")
     METHOD <- "Chi squared power calculation"
     NOTE <- "N is the number of observations"

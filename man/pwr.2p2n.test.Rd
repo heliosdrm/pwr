@@ -14,7 +14,7 @@ pwr.2p2n.test(h = NULL, n1 = NULL, n2 = NULL, sig.level = 0.05, power = NULL,
 \arguments{
   \item{h}{Effect size}
   \item{n1}{Number of observations in the first sample}
-  \item{n2}{Number of observationsz in the second sample}
+  \item{n2}{Number of observations in the second sample}
   \item{sig.level}{Significance level (Type I error probability)}
   \item{power}{Power of test (1 minus Type II error probability)}
   \item{alternative}{a character string specifying the alternative hypothesis,
@@ -35,7 +35,7 @@ pwr.2p2n.test(h = NULL, n1 = NULL, n2 = NULL, sig.level = 0.05, power = NULL,
 \references{Cohen, J. (1988). Statistical power analysis for the
 	behavioral sciences (2nd ed.). Hillsdale,NJ: Lawrence Erlbaum.}
 \author{Stephane Champely <champely@univ-lyon1.fr> but this is a mere copy of Peter Dalgaard work (power.t.test)}
-\note{  
+\note{
 'uniroot' is used to solve power equation for unknowns, so you may
      see errors from it, notably about inability to bracket the root
      when invalid arguments are given.
@@ -49,4 +49,3 @@ pwr.2p2n.test(h=0.30,n1=80,n2=245,sig.level=0.05,alternative="greater")
 pwr.2p2n.test(h=0.20,n1=1600,power=0.9,sig.level=0.01,alternative="two.sided")
 }
 \keyword{htest}
-
