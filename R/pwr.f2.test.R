@@ -22,8 +22,8 @@ function (u = NULL, v = NULL, f2 = NULL, sig.level = 0.05, power = NULL)
         stop(sQuote("power"), " must be numeric in [0, 1]")
     p.body <- quote({
         lambda <- f2*(u+v+1)
-        pf(qf(sig.level, u, v, lower = FALSE),
-            u, v, lambda, lower = FALSE)
+        pf(qf(sig.level, u, v, lower.tail = FALSE),
+            u, v, lambda, lower.tail = FALSE)
     })
     if (is.null(power))
         power <- eval(p.body)

@@ -24,23 +24,23 @@ function (n = NULL, d = NULL, sig.level = 0.05, power = NULL,
     if (ttside == 1) {
         p.body <- quote({
             nu <- (n - 1) * tsample
-            pt(qt(sig.level/tside, nu, lower = TRUE), nu,
-                ncp = sqrt(n/tsample) * d, lower = TRUE)
+            pt(qt(sig.level/tside, nu, lower.tail = TRUE), nu,
+                ncp = sqrt(n/tsample) * d, lower.tail = TRUE)
         })
     }
     if (ttside == 2)  {
         p.body <- quote({
             nu <- (n - 1) * tsample
-            qu <- qt(sig.level/tside, nu, lower = FALSE)
-            pt(qu, nu, ncp = sqrt(n/tsample) * d, lower = FALSE) +
-                pt(-qu, nu, ncp = sqrt(n/tsample) * d, lower = TRUE)
+            qu <- qt(sig.level/tside, nu, lower.tail = FALSE)
+            pt(qu, nu, ncp = sqrt(n/tsample) * d, lower.tail = FALSE) +
+                pt(-qu, nu, ncp = sqrt(n/tsample) * d, lower.tail = TRUE)
         })
     }
 	if (ttside == 3) {
         p.body <- quote({
             nu <- (n - 1) * tsample
-            pt(qt(sig.level/tside, nu, lower = FALSE), nu,
-                ncp = sqrt(n/tsample) * d, lower = FALSE)
+            pt(qt(sig.level/tside, nu, lower.tail = FALSE), nu,
+                ncp = sqrt(n/tsample) * d, lower.tail = FALSE)
         })
     }
 

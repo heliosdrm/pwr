@@ -23,23 +23,23 @@ function (h = NULL, n1 = NULL, n2 = NULL, sig.level = 0.05, power = NULL,
         h <- abs(h)
     if (tside == 3) {
         p.body <- quote({
-            pnorm(qnorm(sig.level, lower = FALSE) - h * sqrt((n1 *
-                n2)/(n1 + n2)), lower = FALSE)
+            pnorm(qnorm(sig.level, lower.tail = FALSE) - h * sqrt((n1 *
+                n2)/(n1 + n2)), lower.tail = FALSE)
         })
     }
     if (tside == 1) {
         p.body <- quote({
-            pnorm(qnorm(sig.level, lower = TRUE) - h * sqrt((n1 *
-                n2)/(n1 + n2)), lower = TRUE)
+            pnorm(qnorm(sig.level, lower.tail = TRUE) - h * sqrt((n1 *
+                n2)/(n1 + n2)), lower.tail = TRUE)
         })
     }
 
      if (tside == 2)  {
         p.body <- quote({
-            pnorm(qnorm(sig.level/2, lower = FALSE) - h * sqrt((n1 *
-                n2)/(n1 + n2)), lower = FALSE) + pnorm(qnorm(sig.level/2,
-                lower = TRUE) - h * sqrt((n1 * n2)/(n1 + n2)),
-                lower = TRUE)
+            pnorm(qnorm(sig.level/2, lower.tail = FALSE) - h * sqrt((n1 *
+                n2)/(n1 + n2)), lower.tail = FALSE) + pnorm(qnorm(sig.level/2,
+                lower.tail = TRUE) - h * sqrt((n1 * n2)/(n1 + n2)),
+                lower.tail = TRUE)
         })
     }
     if (is.null(power))

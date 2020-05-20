@@ -21,22 +21,22 @@ function (d = NULL, n = NULL, sig.level = 0.05, power = NULL,
         d <- abs(d)
     if (tside == 2) {
         p.body <- quote({
-            pnorm(qnorm(sig.level/2, lower = FALSE) - d * sqrt(n),
-                lower = FALSE) + pnorm(qnorm(sig.level/2, lower = TRUE) -
-                d * sqrt(n), lower = TRUE)
+            pnorm(qnorm(sig.level/2, lower.tail = FALSE) - d * sqrt(n),
+                lower.tail = FALSE) + pnorm(qnorm(sig.level/2, lower.tail = TRUE) -
+                d * sqrt(n), lower.tail = TRUE)
         })
     }
     if (tside==1) {
         p.body <- quote({
-            pnorm(qnorm(sig.level, lower = TRUE) - d * sqrt(n),
-                lower = TRUE)
+            pnorm(qnorm(sig.level, lower.tail = TRUE) - d * sqrt(n),
+                lower.tail = TRUE)
         })
     }
 
     if (tside==3) {
         p.body <- quote({
-            pnorm(qnorm(sig.level, lower = FALSE) - d * sqrt(n),
-                lower = FALSE)
+            pnorm(qnorm(sig.level, lower.tail = FALSE) - d * sqrt(n),
+                lower.tail = FALSE)
         })
     }
 
