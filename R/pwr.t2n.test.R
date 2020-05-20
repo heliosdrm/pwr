@@ -28,23 +28,23 @@ function (n1 = NULL, n2= NULL, d = NULL, sig.level = 0.05, power = NULL,
     if (ttside == 1) {
         p.body <- quote({
             nu <- n1+n2-2
-            pt(qt(sig.level/tside, nu, lower = TRUE), nu,
-                ncp = d*(1/sqrt(1/n1+1/n2)), lower = TRUE)
+            pt(qt(sig.level/tside, nu, lower.tail = TRUE), nu,
+                ncp = d*(1/sqrt(1/n1+1/n2)), lower.tail = TRUE)
         })
     }
     if (ttside == 2)  {
         p.body <- quote({
            nu <- n1+n2-2
-            qu <- qt(sig.level/tside, nu, lower = FALSE)
-            pt(qu, nu, ncp = d*(1/sqrt(1/n1+1/n2)), lower = FALSE) +
-                pt(-qu, nu,ncp = d*(1/sqrt(1/n1+1/n2)), lower = TRUE)
+            qu <- qt(sig.level/tside, nu, lower.tail = FALSE)
+            pt(qu, nu, ncp = d*(1/sqrt(1/n1+1/n2)), lower.tail = FALSE) +
+                pt(-qu, nu,ncp = d*(1/sqrt(1/n1+1/n2)), lower.tail = TRUE)
         })
     }
 	if (ttside == 3) {
         p.body <- quote({
            nu <- n1+n2-2
-            pt(qt(sig.level/tside, nu, lower = FALSE), nu,
-                ncp = d*(1/sqrt(1/n1+1/n2)), lower = FALSE)
+            pt(qt(sig.level/tside, nu, lower.tail = FALSE), nu,
+                ncp = d*(1/sqrt(1/n1+1/n2)), lower.tail = FALSE)
         })
     }
 

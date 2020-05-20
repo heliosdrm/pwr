@@ -21,7 +21,7 @@ function (n = NULL, r = NULL, sig.level = 0.05, power = NULL,
         r <- abs(r)
     if (tside == 3) {
         p.body <- quote({
-            ttt <- qt(sig.level, df = n - 2, lower = FALSE)
+            ttt <- qt(sig.level, df = n - 2, lower.tail = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
             zrc <- atanh(rc) # + rc/(2 * (n - 1))
@@ -31,7 +31,7 @@ function (n = NULL, r = NULL, sig.level = 0.05, power = NULL,
     if (tside == 1) {
         p.body <- quote({
             r<--r
-            ttt <- qt(sig.level, df = n - 2, lower = FALSE)
+            ttt <- qt(sig.level, df = n - 2, lower.tail = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
             zrc <- atanh(rc) # + rc/(2 * (n - 1))
@@ -41,7 +41,7 @@ function (n = NULL, r = NULL, sig.level = 0.05, power = NULL,
 
     if (tside == 2) {
         p.body <- quote({
-            ttt <- qt(sig.level/2, df = n - 2, lower = FALSE)
+            ttt <- qt(sig.level/2, df = n - 2, lower.tail = FALSE)
             rc <- sqrt(ttt^2/(ttt^2 + n - 2))
             zr <- atanh(r) + r/(2 * (n - 1))
             zrc <- atanh(rc) # + rc/(2 * (n - 1))
