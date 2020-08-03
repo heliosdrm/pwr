@@ -16,10 +16,10 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
         power > 1))
         stop(sQuote("power"), " must be numeric in [0, 1]")
     alternative <- match.arg(alternative)
-    tside <- switch(alternative, less = 1, two.sided = 2, greater=3)
+    tside <- switch(alternative, less = 1, two.sided = 2, greater=1)
     if (tside == 2 && !is.null(h))
         h <- abs(h)
-    if (tside == 3) {
+    if (tside == 1) {
         p.body <- quote({
             pnorm(qnorm(sig.level, lower.tail = FALSE) - h * sqrt(n/2),
                 lower.tail = FALSE)
@@ -32,12 +32,6 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
                 h * sqrt(n/2), lower.tail = TRUE)
         })
     }
-    if (tside ==1) {
-        p.body <- quote({
-            pnorm(qnorm(sig.level, lower.tail = TRUE) - h * sqrt(n/2),
-                lower.tail = TRUE)
-        })
-    }
 
     if (is.null(power))
         power <- eval(p.body)
@@ -45,8 +39,6 @@ function (h = NULL, n = NULL, sig.level = 0.05, power = NULL,
         if(tside==2)
             h <- uniroot(function(h) eval(p.body) - power, c(1e-10,10))$root
         if(tside==1)
-            h <- uniroot(function(h) eval(p.body) - power, c(-10,5))$root
-        if(tside==3)
             h <- uniroot(function(h) eval(p.body) - power, c(-5,10))$root
     }
     else if (is.null(n))
