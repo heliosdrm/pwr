@@ -1,7 +1,7 @@
 # R package &ldquo;pwr&rdquo;
 ## Basic functions for power analysis
 
-[![Build Status](https://travis-ci.org/heliosdrm/pwr.svg?branch=master)](https://travis-ci.org/heliosdrm/pwr)
+[![Build Status](https://github.com/heliosdrm/pwr/actions/workflows/check-standard.yaml/badge.svg?branch=master)]([https://travis-ci.org/heliosdrm/pwr](https://github.com/heliosdrm/pwr/actions/workflows/check-standard.yaml))
 
 [![CRAN version](http://www.r-pkg.org/badges/version/pwr)](http://www.r-pkg.org/pkg/pwr)
 [![Downloads](http://cranlogs.r-pkg.org/badges/pwr)]()
